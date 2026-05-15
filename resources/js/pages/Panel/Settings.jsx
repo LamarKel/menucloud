@@ -1,4 +1,4 @@
-import PanelLayout from '@/Layouts/PanelLayout';
+import PanelLayout from '@/layouts/PanelLayout';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 
