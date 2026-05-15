@@ -1,4 +1,4 @@
-import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout';
+import AppLayoutTemplate from '@/Layouts/app/app-sidebar-layout';
 import { type BreadcrumbItem } from '@/types';
 
 interface AppLayoutProps {
