@@ -1,4 +1,4 @@
-import PanelLayout from '@/Layouts/PanelLayout';
+import PanelLayout from '@/layouts/PanelLayout';
 import { Head, Link } from '@inertiajs/react';
 import {
     ShoppingBagIcon,
