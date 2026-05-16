@@ -33,6 +33,28 @@ class GoogleController extends Controller
                 return redirect()->route('admin.dashboard');
             }
 
+            // Verificar que el restaurante existe y está activo
+            if (!$user->restaurant_id || !$user->restaurant) {
+                Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Tu cuenta no tiene un restaurante asociado. Contacta al administrador.',
+                ]);
+            }
+
+            if ($user->restaurant->status === 'pending') {
+                Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Tu restaurante está pendiente de aprobación.',
+                ]);
+            }
+
+            if ($user->restaurant->status === 'suspended') {
+                Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Tu cuenta está suspendida. Contacta al administrador.',
+                ]);
+            }
+
             return redirect()->route('panel.dashboard');
         } catch (\Exception $e) {
             return redirect()->route('login')->withErrors([

@@ -4,7 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class RoleMiddleware
 {
@@ -18,14 +20,28 @@ class RoleMiddleware
             abort(403, 'No tienes permiso para acceder a esta sección.');
         }
 
-        // Restaurante suspendido no puede acceder a su panel
         if ($role === 'restaurant') {
-            $restaurant = $request->user()->restaurant;
-            if ($restaurant && $restaurant->status === 'suspended') {
-                abort(403, 'Tu cuenta está suspendida. Contacta al administrador.');
+            $user = $request->user();
+
+            if (!$user->restaurant_id || !$user->restaurant) {
+                Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Tu cuenta no tiene un restaurante asociado. Contacta al administrador.',
+                ]);
             }
-            if ($restaurant && $restaurant->status === 'pending') {
-                abort(403, 'Tu cuenta está pendiente de aprobación.');
+
+            if ($user->restaurant->status === 'suspended') {
+                Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Tu cuenta está suspendida. Contacta al administrador.',
+                ]);
+            }
+
+            if ($user->restaurant->status === 'pending') {
+                Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Tu restaurante está pendiente de aprobación.',
+                ]);
             }
         }
 

@@ -68,6 +68,17 @@ export default function Login({ status, canResetPassword }: { status?: string; c
                                     {status}
                                 </div>
                             )}
+                            {status && (
+                                <div className="mb-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
+                                    {status}
+                                </div>
+                            )}
+
+                            {(errors.email || errors.password) && (
+                                <div className="mb-4 p-3 rounded-xl text-sm" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#f87171' }}>
+                                    {errors.email || errors.password}
+                                </div>
+                            )}
 
                             <form onSubmit={submit} className="space-y-4">
                                 <div>
@@ -86,7 +97,7 @@ export default function Login({ status, canResetPassword }: { status?: string; c
                                         placeholder="correo@turestaurante.com"
                                         autoComplete="email"
                                     />
-                                    {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+
                                 </div>
 
                                 <div>
