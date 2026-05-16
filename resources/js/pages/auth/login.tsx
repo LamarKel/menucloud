@@ -1,4 +1,4 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function Login({ status, canResetPassword }: { status?: string; canResetPassword: boolean }) {
@@ -13,6 +13,7 @@ export default function Login({ status, canResetPassword }: { status?: string; c
         e.preventDefault();
         post(route('login'));
     };
+    const { flash } = usePage().props as any;
 
     return (
         <>
@@ -71,6 +72,11 @@ export default function Login({ status, canResetPassword }: { status?: string; c
                             {status && (
                                 <div className="mb-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
                                     {status}
+                                </div>
+                            )}
+                            {flash?.google_error && (
+                                <div className="mb-4 p-3 rounded-xl text-sm" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#f87171' }}>
+                                    {flash.google_error}
                                 </div>
                             )}
 
