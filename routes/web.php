@@ -14,6 +14,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RegisterRestaurantController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\Auth\GoogleController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -61,5 +62,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
     });
 });
-
+Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');
 require __DIR__ . '/auth.php';
