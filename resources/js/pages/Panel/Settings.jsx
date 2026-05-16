@@ -1,6 +1,7 @@
 import PanelLayout from '@/Layouts/PanelLayout';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { QRCode } from 'react-qrcode-logo';
 
 export default function Settings({ restaurant, settings }) {
     const [form, setForm] = useState({
@@ -24,13 +25,33 @@ export default function Settings({ restaurant, settings }) {
         card_color: settings?.card_color ?? '#ffffff0f',
         nav_color: settings?.nav_color ?? '#1a1611',
     });
+    const [logo, setLogo] = useState(null);
+    const [banner, setBanner] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.put(route('panel.settings.update'), form, {
-            onSuccess: () => alert('Configuración guardada exitosamente.'),
+
+        const data = new FormData();
+
+        Object.keys(form).forEach(key => {
+            data.append(key, form[key]);
+        });
+
+        if (logo) data.append('logo', logo);
+        if (banner) data.append('banner', banner);
+
+        data.append('_method', 'PUT');
+
+        router.post(route('panel.settings.update'), data, {
+            forceFormData: true,
+            onSuccess: () => {
+                alert('Configuración guardada exitosamente.');
+                setLogo(null);
+                setBanner(null);
+            },
         });
     };
+
 
     return (
         <PanelLayout title="Mi Restaurante">
@@ -107,6 +128,45 @@ export default function Settings({ restaurant, settings }) {
                                 rows={3}
                                 placeholder="Describe tu restaurante..."
                             />
+                        </div>
+                        <div className="col-span-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Logo del restaurante</label>
+                            {restaurant.logo && (
+                                <div className="mb-2">
+                                    <img
+                                        src={`/storage/${restaurant.logo}`}
+                                        alt="Logo"
+                                        className="w-16 h-16 rounded-full object-cover border border-gray-200"
+                                    />
+                                </div>
+                            )}
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={e => setLogo(e.target.files[0])}
+                                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none"
+                            />
+                            <p className="text-xs text-gray-400 mt-1">Recomendado: imagen cuadrada, mínimo 200x200px</p>
+                        </div>
+
+                        <div className="col-span-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Banner del restaurante</label>
+                            {restaurant.banner && (
+                                <div className="mb-2">
+                                    <img
+                                        src={`/storage/${restaurant.banner}`}
+                                        alt="Banner"
+                                        className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                                    />
+                                </div>
+                            )}
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={e => setBanner(e.target.files[0])}
+                                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none"
+                            />
+                            <p className="text-xs text-gray-400 mt-1">Recomendado: imagen horizontal, mínimo 1200x400px</p>
                         </div>
                     </div>
                 </div>
@@ -264,6 +324,55 @@ export default function Settings({ restaurant, settings }) {
                         >
                             Ver Menú
                         </a>
+                    </div>
+                </div>
+
+                {/* Código QR */}
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <h3 className="font-semibold text-gray-800 mb-4">Código QR de tu Menú</h3>
+                    <div className="flex flex-col md:flex-row items-center gap-6">
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="p-3 bg-white border border-gray-200 rounded-xl" id="qr-container">
+                                <QRCode
+                                    value={`${window.location.origin}/menu/${restaurant.slug}`}
+                                    size={180}
+                                    bgColor="#ffffff"
+                                    fgColor="#1a1611"
+                                    qrStyle="dots"
+                                    eyeRadius={6}
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const canvas = document.querySelector('#qr-container canvas');
+                                    if (canvas) {
+                                        const link = document.createElement('a');
+                                        link.download = `qr-${restaurant.slug}.png`;
+                                        link.href = canvas.toDataURL();
+                                        link.click();
+                                    }
+                                }}
+                                className="flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium rounded-lg transition-colors"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                Descargar QR
+                            </button>
+                        </div>
+                        <div className="flex-1">
+                            <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                                Imprime este código QR y colócalo en tus mesas, menús físicos, tarjetas de presentación o redes sociales.
+                            </p>
+                            <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                                Tus clientes solo tienen que escanearlo con la cámara de su celular para ver tu menú digital al instante.
+                            </p>
+                            <div className="bg-gray-50 border border-gray-100 rounded-lg p-3 text-xs text-gray-500">
+                                <strong>URL del menú:</strong><br />
+                                {window.location.origin}/menu/{restaurant.slug}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
