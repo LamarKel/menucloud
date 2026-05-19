@@ -65,13 +65,13 @@ export default function Settings({ restaurant, settings }) {
         router.post(route('panel.settings.update'), data, {
             forceFormData: true,
             onSuccess: () => {
-                alert('Configuración guardada exitosamente.');
+                //    alert('Configuración guardada exitosamente.');
                 setLogo(null);
                 setBanner(null);
             },
             onError: (errors) => {
                 console.log(errors);
-                alert('Error al guardar. Revisa la consola.');
+                //   alert('Error al guardar. Revisa la consola.');
             },
         });
     };

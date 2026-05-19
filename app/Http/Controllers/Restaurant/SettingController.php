@@ -22,7 +22,7 @@ class SettingController extends Controller
     {
         $restaurant = $request->user()->restaurant;
 
-        $restaurantData = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'owner_name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
@@ -34,14 +34,25 @@ class SettingController extends Controller
             'banner' => 'nullable|image|max:4096',
         ]);
 
+        $restaurantData = [
+            'name' => $request->name,
+            'owner_name' => $request->owner_name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'cuisine_type' => $request->cuisine_type,
+            'description' => $request->description,
+        ];
+
+        $cloudinary = new \Cloudinary\Cloudinary([
+            'cloud' => [
+                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                'api_key' => env('CLOUDINARY_API_KEY'),
+                'api_secret' => env('CLOUDINARY_API_SECRET'),
+            ],
+        ]);
+
         if ($request->hasFile('logo')) {
-            $cloudinary = new \Cloudinary\Cloudinary([
-                'cloud' => [
-                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                    'api_key' => env('CLOUDINARY_API_KEY'),
-                    'api_secret' => env('CLOUDINARY_API_SECRET'),
-                ],
-            ]);
             $result = $cloudinary->uploadApi()->upload(
                 $request->file('logo')->getRealPath(),
                 ['folder' => 'menucloud/logos']
@@ -50,13 +61,6 @@ class SettingController extends Controller
         }
 
         if ($request->hasFile('banner')) {
-            $cloudinary = new \Cloudinary\Cloudinary([
-                'cloud' => [
-                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                    'api_key' => env('CLOUDINARY_API_KEY'),
-                    'api_secret' => env('CLOUDINARY_API_SECRET'),
-                ],
-            ]);
             $result = $cloudinary->uploadApi()->upload(
                 $request->file('banner')->getRealPath(),
                 ['folder' => 'menucloud/banners']
@@ -66,20 +70,20 @@ class SettingController extends Controller
 
         $restaurant->update($restaurantData);
 
-        $settingsData = $request->validate([
-            'primary_color' => 'nullable|string|max:7',
-            'font_choice' => 'nullable|string|max:50',
-            'show_calories' => 'boolean',
-            'show_allergens' => 'boolean',
-            'show_promotions' => 'boolean',
-            'social_instagram' => 'nullable|string|max:255',
-            'social_facebook' => 'nullable|string|max:255',
-            'social_whatsapp' => 'nullable|string|max:20',
-            'bg_color' => 'nullable|string|max:9',
-            'text_color' => 'nullable|string|max:9',
-            'card_color' => 'nullable|string|max:9',
-            'nav_color' => 'nullable|string|max:9',
-        ]);
+        $settingsData = [
+            'primary_color' => $request->primary_color,
+            'font_choice' => $request->font_choice,
+            'show_calories' => $request->show_calories == '1',
+            'show_allergens' => $request->show_allergens == '1',
+            'show_promotions' => $request->show_promotions == '1',
+            'social_instagram' => $request->social_instagram,
+            'social_facebook' => $request->social_facebook,
+            'social_whatsapp' => $request->social_whatsapp,
+            'bg_color' => $request->bg_color,
+            'text_color' => $request->text_color,
+            'card_color' => $request->card_color,
+            'nav_color' => $request->nav_color,
+        ];
 
         $restaurant->settings()->updateOrCreate(
             ['restaurant_id' => $restaurant->id],
