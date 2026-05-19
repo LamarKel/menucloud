@@ -33,10 +33,30 @@ export default function Settings({ restaurant, settings }) {
 
         const data = new FormData();
 
-        Object.keys(form).forEach(key => {
-            data.append(key, form[key]);
-        });
+        // Campos de texto normales
+        data.append('name', form.name);
+        data.append('owner_name', form.owner_name);
+        data.append('phone', form.phone);
+        data.append('address', form.address);
+        data.append('city', form.city);
+        data.append('cuisine_type', form.cuisine_type);
+        data.append('description', form.description);
+        data.append('primary_color', form.primary_color);
+        data.append('font_choice', form.font_choice);
+        data.append('social_instagram', form.social_instagram);
+        data.append('social_facebook', form.social_facebook);
+        data.append('social_whatsapp', form.social_whatsapp);
+        data.append('bg_color', form.bg_color);
+        data.append('text_color', form.text_color);
+        data.append('card_color', form.card_color);
+        data.append('nav_color', form.nav_color);
 
+        // Booleanos como 1 o 0
+        data.append('show_calories', form.show_calories ? '1' : '0');
+        data.append('show_allergens', form.show_allergens ? '1' : '0');
+        data.append('show_promotions', form.show_promotions ? '1' : '0');
+
+        // Imágenes
         if (logo) data.append('logo', logo);
         if (banner) data.append('banner', banner);
 
@@ -48,6 +68,10 @@ export default function Settings({ restaurant, settings }) {
                 alert('Configuración guardada exitosamente.');
                 setLogo(null);
                 setBanner(null);
+            },
+            onError: (errors) => {
+                console.log(errors);
+                alert('Error al guardar. Revisa la consola.');
             },
         });
     };
