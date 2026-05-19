@@ -59,7 +59,7 @@ export default function Show({ restaurant }) {
                     {restaurant.banner && (
                         <div className="relative w-full overflow-hidden" style={{ height: '140px' }}>
                             <img
-                                src={restaurant.logo}
+                                src={restaurant.banner}
                                 alt={restaurant.name}
                                 className="w-full h-full object-cover"
                             />
