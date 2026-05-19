@@ -35,19 +35,33 @@ class SettingController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            $result = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+            $cloudinary = new \Cloudinary\Cloudinary([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key' => env('CLOUDINARY_API_KEY'),
+                    'api_secret' => env('CLOUDINARY_API_SECRET'),
+                ],
+            ]);
+            $result = $cloudinary->uploadApi()->upload(
                 $request->file('logo')->getRealPath(),
                 ['folder' => 'menucloud/logos']
             );
-            $restaurantData['logo'] = $result->getSecurePath();
+            $restaurantData['logo'] = $result['secure_url'];
         }
 
         if ($request->hasFile('banner')) {
-            $result = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+            $cloudinary = new \Cloudinary\Cloudinary([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key' => env('CLOUDINARY_API_KEY'),
+                    'api_secret' => env('CLOUDINARY_API_SECRET'),
+                ],
+            ]);
+            $result = $cloudinary->uploadApi()->upload(
                 $request->file('banner')->getRealPath(),
                 ['folder' => 'menucloud/banners']
             );
-            $restaurantData['banner'] = $result->getSecurePath();
+            $restaurantData['banner'] = $result['secure_url'];
         }
 
         $restaurant->update($restaurantData);

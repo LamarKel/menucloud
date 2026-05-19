@@ -55,13 +55,19 @@ class ProductController extends Controller
             'is_featured' => 'boolean',
             'sort_order' => 'integer|min:0',
         ]);
-
         if ($request->hasFile('image')) {
-            $result = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+            $cloudinary = new \Cloudinary\Cloudinary([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key' => env('CLOUDINARY_API_KEY'),
+                    'api_secret' => env('CLOUDINARY_API_SECRET'),
+                ],
+            ]);
+            $result = $cloudinary->uploadApi()->upload(
                 $request->file('image')->getRealPath(),
                 ['folder' => 'menucloud/products']
             );
-            $validated['image'] = $result->getSecurePath();
+            $validated['image'] = $result['secure_url'];
         }
 
         $validated['restaurant_id'] = $restaurant->id;
@@ -89,11 +95,18 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $result = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+            $cloudinary = new \Cloudinary\Cloudinary([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key' => env('CLOUDINARY_API_KEY'),
+                    'api_secret' => env('CLOUDINARY_API_SECRET'),
+                ],
+            ]);
+            $result = $cloudinary->uploadApi()->upload(
                 $request->file('image')->getRealPath(),
                 ['folder' => 'menucloud/products']
             );
-            $validated['image'] = $result->getSecurePath();
+            $validated['image'] = $result['secure_url'];
         }
 
         $product->update($validated);
