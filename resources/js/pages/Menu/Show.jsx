@@ -59,7 +59,7 @@ export default function Show({ restaurant }) {
                     {restaurant.banner && (
                         <div className="relative w-full overflow-hidden" style={{ height: '140px' }}>
                             <img
-                                src={`/storage/${restaurant.banner}`}
+                                src={restaurant.logo}
                                 alt={restaurant.name}
                                 className="w-full h-full object-cover"
                             />
@@ -71,7 +71,7 @@ export default function Show({ restaurant }) {
                     <div className="max-w-5xl mx-auto px-6 py-3 flex items-center gap-3">
                         {restaurant.logo && (
                             <img
-                                src={`/storage/${restaurant.logo}`}
+                                src={restaurant.logo}
                                 alt={restaurant.name}
                                 className="w-11 h-11 rounded-full object-cover border-2 flex-shrink-0"
                                 style={{
@@ -217,7 +217,7 @@ export default function Show({ restaurant }) {
                                     >
                                         {product.image ? (
                                             <img
-                                                src={`/storage/${product.image}`}
+                                                src={product.image}
                                                 alt={product.name}
                                                 className="w-full object-cover"
                                                 style={{ height: '140px' }}
@@ -294,7 +294,7 @@ export default function Show({ restaurant }) {
                             >
                                 {selectedProduct.image ? (
                                     <img
-                                        src={`/storage/${selectedProduct.image}`}
+                                        src={selectedProduct.image}
                                         alt={selectedProduct.name}
                                         className="w-full object-cover"
                                         style={{ height: '260px' }}

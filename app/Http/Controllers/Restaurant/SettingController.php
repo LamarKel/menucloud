@@ -35,11 +35,19 @@ class SettingController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            $restaurantData['logo'] = $request->file('logo')->store('logos', 'public');
+            $result = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+                $request->file('logo')->getRealPath(),
+                ['folder' => 'menucloud/logos']
+            );
+            $restaurantData['logo'] = $result->getSecurePath();
         }
 
         if ($request->hasFile('banner')) {
-            $restaurantData['banner'] = $request->file('banner')->store('banners', 'public');
+            $result = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+                $request->file('banner')->getRealPath(),
+                ['folder' => 'menucloud/banners']
+            );
+            $restaurantData['banner'] = $result->getSecurePath();
         }
 
         $restaurant->update($restaurantData);

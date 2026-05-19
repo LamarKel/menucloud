@@ -137,7 +137,7 @@ export default function Products({ products, categories, max_products }) {
                     <div key={p.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                         <div className="h-36 bg-gray-50 flex items-center justify-center relative">
                             {p.image
-                                ? <img src={`/storage/${p.image}`} alt={p.name} className="w-full h-full object-cover" />
+                                ? <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
                                 : <PhotoIcon className="w-10 h-10 text-gray-300" />
                             }
                             {p.is_featured && (

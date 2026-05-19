@@ -57,7 +57,11 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'public');
+            $result = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+                $request->file('image')->getRealPath(),
+                ['folder' => 'menucloud/products']
+            );
+            $validated['image'] = $result->getSecurePath();
         }
 
         $validated['restaurant_id'] = $restaurant->id;
@@ -85,10 +89,11 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $validated['image'] = $request->file('image')->store('products', 'public');
+            $result = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+                $request->file('image')->getRealPath(),
+                ['folder' => 'menucloud/products']
+            );
+            $validated['image'] = $result->getSecurePath();
         }
 
         $product->update($validated);
