@@ -95,7 +95,7 @@ export default function Products({ products, categories, max_products }) {
     });
 
     return (
-        <PanelLayout title="Productos">
+        <PanelLayout title="Productos" showSyncStatus>
             <Head title="Productos" />
 
             {/* Header */}

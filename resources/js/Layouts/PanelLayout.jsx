@@ -1,5 +1,6 @@
 import { Link, usePage, router } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
+import MenuSyncStatus from '@/Components/Panel/MenuSyncStatus';
 import {
     ChartPieIcon,
     BuildingStorefrontIcon,
@@ -47,7 +48,7 @@ function FlashMessage() {
     );
 }
 
-export default function PanelLayout({ children, title }) {
+export default function PanelLayout({ children, title, showSyncStatus = false }) {
     const { auth } = usePage().props;
     const user = auth.user;
     const isSuperAdmin = user.role === 'superadmin';
@@ -150,6 +151,7 @@ export default function PanelLayout({ children, title }) {
             <div className="flex-1 flex flex-col overflow-hidden">
                 <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
                     <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
+                    {showSyncStatus && <MenuSyncStatus />}
                 </header>
                 <main className="flex-1 overflow-y-auto p-6">
                     {children}

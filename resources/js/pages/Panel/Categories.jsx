@@ -57,7 +57,7 @@ export default function Categories({ categories }) {
     };
 
     return (
-        <PanelLayout title="Categorías">
+        <PanelLayout title="Categorías" showSyncStatus>
             <Head title="Categorías" />
 
             <div className="flex justify-end mb-6">

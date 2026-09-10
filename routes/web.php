@@ -10,6 +10,7 @@ use App\Http\Controllers\Restaurant\CategoryController;
 use App\Http\Controllers\Restaurant\ProductController;
 use App\Http\Controllers\Restaurant\PromotionController;
 use App\Http\Controllers\Restaurant\SettingController;
+use App\Http\Controllers\Restaurant\MenuSyncStatusController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RegisterRestaurantController;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +61,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::apiResource('promotions', PromotionController::class);
         Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
         Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
+        Route::get('/menu-sync-status', [MenuSyncStatusController::class, 'show'])->name('menu-sync-status');
     });
 });
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');

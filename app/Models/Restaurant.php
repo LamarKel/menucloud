@@ -21,11 +21,25 @@ class Restaurant extends Model
         'status',
         'plan_id',
         'approved_at',
+        'menu_version',
+        'menu_version_updated_at',
     ];
 
     protected $casts = [
         'approved_at' => 'datetime',
+        'menu_version_updated_at' => 'datetime',
     ];
+
+    /**
+     * Sube la versión del menú de forma atómica. Un solo número gobierna
+     * sesiones activas, reconciliación, alerta y semáforo del lado Dicbot.
+     */
+    public function bumpMenuVersion(): int
+    {
+        $this->increment('menu_version');
+        $this->forceFill(['menu_version_updated_at' => now()])->save();
+        return $this->fresh()->menu_version;
+    }
 
     public function plan()
     {

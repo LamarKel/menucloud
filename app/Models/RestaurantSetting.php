@@ -21,6 +21,7 @@ class RestaurantSetting extends Model
         'text_color',
         'card_color',
         'nav_color',
+        'currency',
     ];
 
     protected $casts = [
