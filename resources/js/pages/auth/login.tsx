@@ -13,7 +13,7 @@ export default function Login({ status, canResetPassword }: { status?: string; c
         e.preventDefault();
         post(route('login'));
     };
-    const { flash } = usePage().props as any;
+    const { flash } = usePage().props as { flash?: { google_error?: string; success?: string; error?: string } };
 
     return (
         <>
