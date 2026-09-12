@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class SuperAdminSeeder extends Seeder
@@ -16,6 +16,7 @@ class SuperAdminSeeder extends Seeder
             'password' => Hash::make('password123'),
             'role' => 'superadmin',
             'restaurant_id' => null,
+            'email_verified_at' => now(),
         ]);
     }
 }

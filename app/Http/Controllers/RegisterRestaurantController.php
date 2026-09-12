@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RestaurantRegistered;
 use App\Models\Plan;
 use App\Models\Restaurant;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
-use App\Mail\RestaurantRegistered;
-use Illuminate\Support\Facades\Mail;
 
 class RegisterRestaurantController extends Controller
 {
@@ -40,7 +40,7 @@ class RegisterRestaurantController extends Controller
         // Crear restaurante
         $restaurant = Restaurant::create([
             'name' => $validated['restaurant_name'],
-            'slug' => Str::slug($validated['restaurant_name']) . '-' . Str::random(4),
+            'slug' => Str::slug($validated['restaurant_name']).'-'.Str::random(4),
             'owner_name' => $validated['owner_name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'] ?? null,
@@ -63,13 +63,16 @@ class RegisterRestaurantController extends Controller
         // Crear configuración por defecto
         $restaurant->settings()->create([]);
 
-        // Crear usuario
+        // Crear usuario. El correo se marca verificado porque el acceso real
+        // queda gobernado por la aprobación del admin (restaurant.status),
+        // no por el flujo de verificación de email de Laravel.
         User::create([
             'name' => $validated['owner_name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
             'role' => 'restaurant',
             'restaurant_id' => $restaurant->id,
+            'email_verified_at' => now(),
         ]);
 
         // Enviar correo de registro
