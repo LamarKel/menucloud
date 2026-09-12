@@ -10,6 +10,7 @@ use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -100,7 +101,15 @@ class RestaurantController extends Controller
             'email_verified_at' => now(),
         ]);
 
-        Password::sendResetLink(['email' => $user->email]);
+        try {
+            Password::sendResetLink(['email' => $user->email]);
+        } catch (\Throwable $e) {
+            Log::error('No se pudo enviar el correo para configurar contraseña', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Restaurante creado exitosamente. Se envió un correo al dueño para que configure su contraseña.');
     }
@@ -113,7 +122,15 @@ class RestaurantController extends Controller
         ]);
 
         // Enviar correo de aprobación
-        Mail::to($restaurant->email)->send(new RestaurantApproved($restaurant));
+        try {
+            Mail::to($restaurant->email)->send(new RestaurantApproved($restaurant));
+        } catch (\Throwable $e) {
+            Log::error('No se pudo enviar el correo de aprobación de restaurante', [
+                'restaurant_id' => $restaurant->id,
+                'email' => $restaurant->email,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Restaurante aprobado y notificado por email.');
     }

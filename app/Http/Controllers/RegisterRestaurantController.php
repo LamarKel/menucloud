@@ -8,6 +8,7 @@ use App\Models\Restaurant;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -75,8 +76,17 @@ class RegisterRestaurantController extends Controller
             'email_verified_at' => now(),
         ]);
 
-        // Enviar correo de registro
-        Mail::to($restaurant->email)->send(new RestaurantRegistered($restaurant));
+        // Enviar correo de registro. Un fallo del proveedor de correo no debe
+        // impedir que el restaurante quede registrado.
+        try {
+            Mail::to($restaurant->email)->send(new RestaurantRegistered($restaurant));
+        } catch (\Throwable $e) {
+            Log::error('No se pudo enviar el correo de registro de restaurante', [
+                'restaurant_id' => $restaurant->id,
+                'email' => $restaurant->email,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         return redirect()->route('register.restaurant.success');
     }
