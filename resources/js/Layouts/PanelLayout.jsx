@@ -1,6 +1,6 @@
 import { Link, usePage, router } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
-import MenuSyncStatus from '@/Components/Panel/MenuSyncStatus';
+import MenuSyncStatus from '@/components/Panel/MenuSyncStatus';
 import {
     ChartPieIcon,
     BuildingStorefrontIcon,
