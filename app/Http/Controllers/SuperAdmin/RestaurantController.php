@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Restaurant;
+use App\Mail\RestaurantApproved;
 use App\Models\Plan;
+use App\Models\Restaurant;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
-use App\Mail\RestaurantApproved;
-use Illuminate\Support\Facades\Mail;
 
 class RestaurantController extends Controller
 {
@@ -54,7 +56,7 @@ class RestaurantController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'owner_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:restaurants,email',
+            'email' => 'required|email|unique:restaurants,email|unique:users,email',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:100',
@@ -66,7 +68,7 @@ class RestaurantController extends Controller
         $slug = $baseSlug;
         $count = 1;
         while (Restaurant::where('slug', $slug)->exists()) {
-            $slug = $baseSlug . '-' . $count;
+            $slug = $baseSlug.'-'.$count;
             $count++;
         }
         $validated['slug'] = $slug;
@@ -87,7 +89,20 @@ class RestaurantController extends Controller
         // Crear configuración por defecto
         $restaurant->settings()->create([]);
 
-        return redirect()->back()->with('success', 'Restaurante creado exitosamente.');
+        // Crear el usuario dueño. El admin no define su contraseña aquí:
+        // se le envía un link para que la establezca él mismo.
+        $user = User::create([
+            'name' => $validated['owner_name'],
+            'email' => $validated['email'],
+            'password' => Hash::make(Str::random(32)),
+            'role' => 'restaurant',
+            'restaurant_id' => $restaurant->id,
+            'email_verified_at' => now(),
+        ]);
+
+        Password::sendResetLink(['email' => $user->email]);
+
+        return redirect()->back()->with('success', 'Restaurante creado exitosamente. Se envió un correo al dueño para que configure su contraseña.');
     }
 
     public function approve(Restaurant $restaurant)
