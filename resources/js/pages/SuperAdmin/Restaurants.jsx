@@ -1,5 +1,5 @@
 import PanelLayout from '@/Layouts/PanelLayout';
-import { Head, router } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 import {
     PlusIcon,
@@ -12,7 +12,7 @@ import {
 export default function Restaurants({ restaurants, plans }) {
     const [showModal, setShowModal] = useState(false);
     const [search, setSearch] = useState('');
-    const [form, setForm] = useState({
+    const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
         name: '',
         owner_name: '',
         email: '',
@@ -29,12 +29,18 @@ export default function Restaurants({ restaurants, plans }) {
         r.email.toLowerCase().includes(search.toLowerCase())
     );
 
+    const closeModal = () => {
+        setShowModal(false);
+        clearErrors();
+        reset();
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.post(route('admin.restaurants.store'), form, {
+        post(route('admin.restaurants.store'), {
             onSuccess: () => {
                 setShowModal(false);
-                setForm({ name: '', owner_name: '', email: '', phone: '', address: '', city: '', cuisine_type: '', plan_id: '' });
+                reset();
             },
         });
     };
@@ -183,13 +189,20 @@ export default function Restaurants({ restaurants, plans }) {
                             <h3 className="text-lg font-semibold text-gray-800">Nuevo Restaurante</h3>
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                            {Object.keys(errors).length > 0 && (
+                                <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
+                                    {Object.values(errors).map((message, i) => (
+                                        <p key={i}>{message}</p>
+                                    ))}
+                                </div>
+                            )}
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="col-span-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Nombre del restaurante *</label>
                                     <input
                                         type="text"
-                                        value={form.name}
-                                        onChange={e => setForm({ ...form, name: e.target.value })}
+                                        value={data.name}
+                                        onChange={e => setData('name', e.target.value)}
                                         className="w-full border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                         required
                                     />
@@ -198,8 +211,8 @@ export default function Restaurants({ restaurants, plans }) {
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Propietario *</label>
                                     <input
                                         type="text"
-                                        value={form.owner_name}
-                                        onChange={e => setForm({ ...form, owner_name: e.target.value })}
+                                        value={data.owner_name}
+                                        onChange={e => setData('owner_name', e.target.value)}
                                         className="w-full border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                         required
                                     />
@@ -208,8 +221,8 @@ export default function Restaurants({ restaurants, plans }) {
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                                     <input
                                         type="email"
-                                        value={form.email}
-                                        onChange={e => setForm({ ...form, email: e.target.value })}
+                                        value={data.email}
+                                        onChange={e => setData('email', e.target.value)}
                                         className="w-full border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                         required
                                     />
@@ -218,8 +231,8 @@ export default function Restaurants({ restaurants, plans }) {
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
                                     <input
                                         type="text"
-                                        value={form.phone}
-                                        onChange={e => setForm({ ...form, phone: e.target.value })}
+                                        value={data.phone}
+                                        onChange={e => setData('phone', e.target.value)}
                                         className="w-full border border-gray-200 rounded-lg px-3 py-2 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                     />
                                 </div>
@@ -227,8 +240,8 @@ export default function Restaurants({ restaurants, plans }) {
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
                                     <input
                                         type="text"
-                                        value={form.city}
-                                        onChange={e => setForm({ ...form, city: e.target.value })}
+                                        value={data.city}
+                                        onChange={e => setData('city', e.target.value)}
                                         className="w-full border border-gray-200 rounded-lg text-gray-900 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                     />
                                 </div>
@@ -236,16 +249,16 @@ export default function Restaurants({ restaurants, plans }) {
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de cocina</label>
                                     <input
                                         type="text"
-                                        value={form.cuisine_type}
-                                        onChange={e => setForm({ ...form, cuisine_type: e.target.value })}
+                                        value={data.cuisine_type}
+                                        onChange={e => setData('cuisine_type', e.target.value)}
                                         className="w-full border border-gray-200 rounded-lg px-3 text-gray-900 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                     />
                                 </div>
                                 <div className="col-span-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Plan *</label>
                                     <select
-                                        value={form.plan_id}
-                                        onChange={e => setForm({ ...form, plan_id: e.target.value })}
+                                        value={data.plan_id}
+                                        onChange={e => setData('plan_id', e.target.value)}
                                         className="w-full border border-gray-200 rounded-lg px-3 text-gray-900 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                         required
                                     >
@@ -259,16 +272,17 @@ export default function Restaurants({ restaurants, plans }) {
                             <div className="flex justify-end gap-3 pt-2">
                                 <button
                                     type="button"
-                                    onClick={() => setShowModal(false)}
+                                    onClick={closeModal}
                                     className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-lg"
                                 >
                                     Cancelar
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-4 py-2 text-sm bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium rounded-lg transition-colors"
+                                    disabled={processing}
+                                    className="px-4 py-2 text-sm bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium rounded-lg transition-colors disabled:opacity-50"
                                 >
-                                    Crear Restaurante
+                                    {processing ? 'Creando...' : 'Crear Restaurante'}
                                 </button>
                             </div>
                         </form>
