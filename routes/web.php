@@ -1,21 +1,20 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboard;
-use App\Http\Controllers\SuperAdmin\RestaurantController as SuperAdminRestaurant;
-use App\Http\Controllers\SuperAdmin\PlanController as SuperAdminPlan;
-use App\Http\Controllers\Restaurant\DashboardController as RestaurantDashboard;
-use App\Http\Controllers\SuperAdmin\PaymentController as SuperAdminPayment;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\RegisterRestaurantController;
 use App\Http\Controllers\Restaurant\CategoryController;
+use App\Http\Controllers\Restaurant\DashboardController as RestaurantDashboard;
+use App\Http\Controllers\Restaurant\MenuSyncStatusController;
 use App\Http\Controllers\Restaurant\ProductController;
 use App\Http\Controllers\Restaurant\PromotionController;
 use App\Http\Controllers\Restaurant\SettingController;
-use App\Http\Controllers\Restaurant\MenuSyncStatusController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\RegisterRestaurantController;
+use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboard;
+use App\Http\Controllers\SuperAdmin\PaymentController as SuperAdminPayment;
+use App\Http\Controllers\SuperAdmin\PlanController as SuperAdminPlan;
+use App\Http\Controllers\SuperAdmin\RestaurantController as SuperAdminRestaurant;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\LandingController;
-use App\Http\Controllers\Auth\GoogleController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -23,8 +22,10 @@ Route::get('/', function () {
         if ($user->role === 'superadmin') {
             return redirect()->route('admin.dashboard');
         }
+
         return redirect()->route('panel.dashboard');
     }
+
     return inertia('Landing');
 })->name('home');
 
@@ -66,4 +67,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
+require __DIR__.'/settings.php';

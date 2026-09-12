@@ -1,13 +1,17 @@
 <?php
 
+use App\Models\Restaurant;
 use App\Models\User;
 
 test('guests are redirected to the login page', function () {
-    $this->get('/dashboard')->assertRedirect('/login');
+    $this->get('/panel/dashboard')->assertRedirect('/login');
 });
 
 test('authenticated users can visit the dashboard', function () {
-    $this->actingAs($user = User::factory()->create());
+    $restaurant = Restaurant::factory()->create();
+    $user = User::factory()->create(['restaurant_id' => $restaurant->id]);
 
-    $this->get('/dashboard')->assertOk();
+    $this->actingAs($user);
+
+    $this->get('/panel/dashboard')->assertOk();
 });

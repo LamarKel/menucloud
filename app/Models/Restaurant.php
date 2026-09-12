@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Restaurant extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'slug',
@@ -38,6 +41,7 @@ class Restaurant extends Model
     {
         $this->increment('menu_version');
         $this->forceFill(['menu_version_updated_at' => now()])->save();
+
         return $this->fresh()->menu_version;
     }
 
