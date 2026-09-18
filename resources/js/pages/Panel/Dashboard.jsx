@@ -55,7 +55,7 @@ export default function Dashboard({ restaurant, stats }) {
                             <ArrowTopRightOnSquareIcon className="w-3 h-3" />
                         </a>
                         <p className="text-gray-400 text-xs mt-2">
-                            menucloud.app/menu/{restaurant.slug}
+                            kemenu.app/menu/{restaurant.slug}
                         </p>
                     </div>
                 </div>

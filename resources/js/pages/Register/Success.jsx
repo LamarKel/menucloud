@@ -3,13 +3,13 @@ import { Head, Link } from '@inertiajs/react';
 export default function Success() {
     return (
         <>
-            <Head title="Solicitud Enviada — MenuCloud" />
+            <Head title="Solicitud Enviada — KeMenu" />
 
             <div className="min-h-screen bg-gray-50 flex flex-col">
 
                 {/* Header */}
                 <div className="bg-gray-900 py-4 px-6">
-                    <span className="text-xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>MenuCloud</span>
+                    <span className="text-xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>KeMenu</span>
                 </div>
 
                 <div className="flex-1 flex items-center justify-center px-4">
@@ -50,7 +50,7 @@ export default function Success() {
                         </Link>
 
                         <p className="text-xs text-gray-400 mt-4">
-                            ¿Tienes preguntas? Escríbenos a <strong>soporte@menucloud.com</strong>
+                            ¿Tienes preguntas? Escríbenos a <strong>soporte@kemenu.com</strong>
                         </p>
                     </div>
                 </div>

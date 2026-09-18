@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 /**
  * Semáforo de sincronización de menú (Capa 4 de la spec de Dicbot).
@@ -40,7 +41,7 @@ export default function MenuSyncStatus() {
             : '';
         return (
             <div className="flex items-center gap-2 bg-green-50 text-green-700 text-sm font-medium px-3 py-1.5 rounded-full border border-green-200">
-                <span>✅</span>
+                <CheckCircleIcon className="w-4 h-4" />
                 <span>El bot ya tiene tu menú actualizado{hora ? ` · ${hora}` : ''}</span>
             </div>
         );
@@ -48,7 +49,7 @@ export default function MenuSyncStatus() {
 
     return (
         <div className="flex items-center gap-2 bg-yellow-50 text-yellow-700 text-sm font-medium px-3 py-1.5 rounded-full border border-yellow-200">
-            <span>⏳</span>
+            <ClockIcon className="w-4 h-4" />
             <span>El bot todavía no confirma el cambio</span>
         </div>
     );

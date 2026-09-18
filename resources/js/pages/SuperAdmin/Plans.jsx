@@ -100,7 +100,7 @@ export default function Plans({ plans }) {
                                 </button>
                             </div>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-3xl font-bold text-yellow-500">${plan.price}</span>
+                                <span className="text-3xl font-bold text-yellow-500">RD${plan.price}</span>
                                 <span className="text-gray-400 text-sm">/mes</span>
                             </div>
                             <p className="text-xs text-gray-400 mt-1">
@@ -164,7 +164,7 @@ export default function Plans({ plans }) {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Precio (USD) *</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Precio (RD$) *</label>
                                     <input
                                         type="number"
                                         value={form.price}

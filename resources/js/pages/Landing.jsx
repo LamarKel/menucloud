@@ -1,40 +1,52 @@
 import { Head, Link } from '@inertiajs/react';
+import {
+    QrCodeIcon,
+    SwatchIcon,
+    BoltIcon,
+    MegaphoneIcon,
+    ChartBarIcon,
+    LockClosedIcon,
+    SparklesIcon,
+    CheckIcon,
+    BuildingStorefrontIcon,
+    PhotoIcon,
+} from '@heroicons/react/24/outline';
 
 export default function Landing() {
     const features = [
-        { icon: '📱', title: 'Menú Digital QR', desc: 'Tus clientes escanean un código QR y ven tu menú al instante. Sin descargar apps.' },
-        { icon: '🎨', title: 'Personalización Total', desc: 'Elige tus colores, fuentes y estilo. Tu menú refleja la identidad de tu restaurante.' },
-        { icon: '⚡', title: 'Actualizaciones en Tiempo Real', desc: 'Cambia precios, agrega platos o desactiva productos al instante desde tu panel.' },
-        { icon: '🎯', title: 'Promociones y Ofertas', desc: 'Crea descuentos, combos y promociones especiales que atraen más clientes.' },
-        { icon: '📊', title: 'Panel Completo', desc: 'Gestiona categorías, productos, promociones y la configuración de tu restaurante.' },
-        { icon: '🔒', title: 'Seguro y Confiable', desc: 'Tu información protegida. Cada restaurante tiene su propio espacio privado.' },
+        { icon: QrCodeIcon, title: 'Menú Digital QR', desc: 'Tus clientes escanean un código QR y ven tu menú al instante. Sin descargar apps.' },
+        { icon: SwatchIcon, title: 'Personalización Total', desc: 'Elige tus colores, fuentes y estilo. Tu menú refleja la identidad de tu restaurante.' },
+        { icon: BoltIcon, title: 'Actualizaciones en Tiempo Real', desc: 'Cambia precios, agrega platos o desactiva productos al instante desde tu panel.' },
+        { icon: MegaphoneIcon, title: 'Promociones y Ofertas', desc: 'Crea descuentos, combos y promociones especiales que atraen más clientes.' },
+        { icon: ChartBarIcon, title: 'Panel Completo', desc: 'Gestiona categorías, productos, promociones y la configuración de tu restaurante.' },
+        { icon: LockClosedIcon, title: 'Seguro y Confiable', desc: 'Tu información protegida. Cada restaurante tiene su propio espacio privado.' },
     ];
 
     const plans = [
         {
             name: 'Basic',
-            price: '50',
+            price: '800',
             color: '#3b82f6',
-            features: ['Hasta 30 productos', '5 categorías', 'Menú QR', 'Soporte por email', '1 administrador'],
+            features: ['Hasta 30 productos', '5 categorías', 'Menú QR', 'Soporte por WhatsApp', '1 administrador'],
         },
         {
             name: 'Pro',
-            price: '100',
+            price: '1,500',
             color: '#C9A84C',
             popular: true,
-            features: ['Hasta 100 productos', '15 categorías', 'Promociones ilimitadas', 'Estadísticas', '3 administradores', 'Soporte prioritario'],
+            features: ['Hasta 100 productos', '15 categorías', 'Promociones ilimitadas', 'QR + Link compartible', '3 administradores', 'Soporte prioritario'],
         },
         {
             name: 'Premium',
-            price: '200',
+            price: '2,500',
             color: '#8b5cf6',
-            features: ['Productos ilimitados', 'Categorías ilimitadas', 'Todo del Pro', 'Dominio propio', 'Admins ilimitados', 'Soporte 24/7 WhatsApp'],
+            features: ['Productos ilimitados', 'Categorías ilimitadas', 'Todo del Pro', 'Soporte 24/7 WhatsApp', 'Admins ilimitados'],
         },
     ];
 
     return (
         <>
-            <Head title="MenuCloud — Menús Digitales para Restaurantes" />
+            <Head title="KeMenu — Menús Digitales para Restaurantes" />
 
             <div className="min-h-screen bg-gray-900 text-white">
 
@@ -42,7 +54,7 @@ export default function Landing() {
                 <nav className="border-b border-white/10 sticky top-0 z-50 bg-gray-900/95 backdrop-blur">
                     <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
                         <div>
-                            <span className="text-2xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>MenuCloud</span>
+                            <span className="text-2xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>KeMenu</span>
                             <span className="text-gray-400 text-sm ml-2 hidden sm:inline">Menús Digitales</span>
                         </div>
                         <div className="flex items-center gap-3">
@@ -63,8 +75,9 @@ export default function Landing() {
 
                 {/* HERO */}
                 <section className="max-w-6xl mx-auto px-6 py-20 text-center">
-                    <div className="inline-block bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 text-xs font-medium px-4 py-1.5 rounded-full mb-6 tracking-wide">
-                        ✦ PLATAFORMA DE MENÚS DIGITALES
+                    <div className="inline-flex items-center gap-1.5 bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 text-xs font-medium px-4 py-1.5 rounded-full mb-6 tracking-wide">
+                        <SparklesIcon className="w-3.5 h-3.5" />
+                        PLATAFORMA DE MENÚS DIGITALES
                     </div>
                     <h1 className="text-5xl sm:text-6xl font-bold leading-tight mb-6" style={{ fontFamily: 'Georgia, serif' }}>
                         Tu menú digital,<br />
@@ -90,9 +103,9 @@ export default function Landing() {
                         </a>
                     </div>
                     <div className="flex items-center justify-center gap-6 mt-10 text-sm text-gray-500">
-                        <span>✓ 30 días gratis</span>
-                        <span>✓ Sin tarjeta de crédito</span>
-                        <span>✓ Activación en 24h</span>
+                        <span className="inline-flex items-center gap-1"><CheckIcon className="w-4 h-4" /> 30 días gratis</span>
+                        <span className="inline-flex items-center gap-1"><CheckIcon className="w-4 h-4" /> Sin tarjeta de crédito</span>
+                        <span className="inline-flex items-center gap-1"><CheckIcon className="w-4 h-4" /> Activación en 24h</span>
                     </div>
                 </section >
 
@@ -106,12 +119,12 @@ export default function Landing() {
                                 <div className="w-3 h-3 rounded-full bg-green-500/60"></div>
                             </div>
                             <div className="flex-1 bg-white/5 rounded-md px-3 py-1 text-xs text-gray-500 text-center">
-                                menucloud.app/tu-restaurante
+                                kemenu.app/tu-restaurante
                             </div>
                         </div>
                         <div className="p-6">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg" style={{ background: 'rgba(201,168,76,0.2)' }}>🍝</div>
+                                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'rgba(201,168,76,0.2)' }}><BuildingStorefrontIcon className="w-5 h-5" style={{ color: '#C9A84C' }} /></div>
                                 <div>
                                     <div className="font-bold text-white">La Casa Italiana</div>
                                     <div className="text-xs text-gray-400">Italiana · Santiago</div>
@@ -126,12 +139,12 @@ export default function Landing() {
                             </div>
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                 {[
-                                    { name: 'Ensalada César', price: '8.50', emoji: '🥗' },
-                                    { name: 'Spaghetti Carbonara', price: '15.00', emoji: '🍝' },
-                                    { name: 'Tiramisú', price: '7.50', emoji: '🍮' },
+                                    { name: 'Ensalada César', price: '8.50' },
+                                    { name: 'Spaghetti Carbonara', price: '15.00' },
+                                    { name: 'Tiramisú', price: '7.50' },
                                 ].map(p => (
                                     <div key={p.name} className="rounded-xl overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(201,168,76,0.15)' }}>
-                                        <div className="h-16 flex items-center justify-center text-3xl" style={{ background: 'rgba(201,168,76,0.08)' }}>{p.emoji}</div>
+                                        <div className="h-16 flex items-center justify-center" style={{ background: 'rgba(201,168,76,0.08)' }}><PhotoIcon className="w-6 h-6" style={{ color: '#C9A84C' }} /></div>
                                         <div className="p-2.5">
                                             <div className="text-xs font-semibold text-white">{p.name}</div>
                                             <div className="text-sm font-bold mt-1" style={{ color: '#C9A84C' }}>${p.price}</div>
@@ -152,7 +165,7 @@ export default function Landing() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {features.map(f => (
                             <div key={f.title} className="rounded-xl p-5 border border-white/10 hover:border-yellow-400/30 transition-colors" style={{ background: 'rgba(255,255,255,0.03)' }}>
-                                <div className="text-3xl mb-3">{f.icon}</div>
+                                <f.icon className="w-8 h-8 mb-3 text-yellow-400" />
                                 <h3 className="font-semibold text-white mb-2">{f.title}</h3>
                                 <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
                             </div>
@@ -183,12 +196,12 @@ export default function Landing() {
                                     </div>
                                 )}
                                 <div className="text-sm text-gray-400 uppercase tracking-wider mb-2">{plan.name}</div>
-                                <div className="text-4xl font-bold mb-1" style={{ color: plan.color }}>${plan.price}</div>
+                                <div className="text-4xl font-bold mb-1" style={{ color: plan.color }}>RD${plan.price}</div>
                                 <div className="text-gray-400 text-sm mb-6">por mes · 30 días gratis</div>
                                 <div className="space-y-2 mb-6">
                                     {plan.features.map(f => (
                                         <div key={f} className="flex items-center gap-2 text-sm text-gray-300">
-                                            <span style={{ color: plan.color }}>✓</span>
+                                            <CheckIcon className="w-4 h-4 flex-shrink-0" style={{ color: plan.color }} />
                                             {f}
                                         </div>
                                     ))}
@@ -213,7 +226,7 @@ export default function Landing() {
                     <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: 'Georgia, serif' }}>
                         ¿Listo para digitalizar tu restaurante?
                     </h2>
-                    <p className="text-gray-400 mb-8">Únete a los restaurantes que ya usan MenuCloud para ofrecer una experiencia moderna a sus clientes.</p>
+                    <p className="text-gray-400 mb-8">Únete a los restaurantes que ya usan KeMenu para ofrecer una experiencia moderna a sus clientes.</p>
                     <Link
                         href="/registro"
                         className="inline-block px-10 py-4 rounded-xl font-bold text-base transition-opacity hover:opacity-90"
@@ -225,7 +238,7 @@ export default function Landing() {
 
                 {/* FOOTER */}
                 <footer className="border-t border-white/10 py-8 text-center text-sm text-gray-500">
-                    <p>© 2026 MenuCloud · Todos los derechos reservados</p>
+                    <p>© 2026 KeMenu · Todos los derechos reservados</p>
                     <p className="mt-1">Menús digitales profesionales para restaurantes</p>
                 </footer>
             </div >

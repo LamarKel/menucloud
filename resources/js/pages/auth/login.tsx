@@ -1,4 +1,5 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { CheckIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
 export default function Login({ status, canResetPassword }: { status?: string; canResetPassword: boolean }) {
@@ -17,14 +18,14 @@ export default function Login({ status, canResetPassword }: { status?: string; c
 
     return (
         <>
-            <Head title="Iniciar Sesión — MenuCloud" />
+            <Head title="Iniciar Sesión — KeMenu" />
 
             <div className="min-h-screen flex" style={{ background: 'linear-gradient(135deg, #1a1611 0%, #2c2418 50%, #1a1611 100%)' }}>
 
                 {/* Panel izquierdo — Branding */}
                 <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 border-r border-white/10">
                     <div>
-                        <span className="text-3xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>MenuCloud</span>
+                        <span className="text-3xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>KeMenu</span>
                         <p className="text-gray-500 text-sm mt-1">Menús Digitales para Restaurantes</p>
                     </div>
                     <div>
@@ -37,17 +38,20 @@ export default function Login({ status, canResetPassword }: { status?: string; c
                         </p>
                         <div className="space-y-3">
                             {[
-                                '✓ Actualiza precios al instante',
-                                '✓ Crea promociones y descuentos',
-                                '✓ Personaliza colores y estilo',
-                                '✓ Comparte tu menú con un QR',
+                                'Actualiza precios al instante',
+                                'Crea promociones y descuentos',
+                                'Personaliza colores y estilo',
+                                'Comparte tu menú con un QR',
                             ].map(item => (
-                                <div key={item} className="text-sm text-gray-400">{item}</div>
+                                <div key={item} className="text-sm text-gray-400 flex items-center gap-2">
+                                    <CheckIcon className="w-4 h-4 flex-shrink-0 text-yellow-400" />
+                                    {item}
+                                </div>
                             ))}
                         </div>
                     </div>
                     <div className="text-xs text-gray-600">
-                        © 2026 MenuCloud · Todos los derechos reservados
+                        © 2026 KeMenu · Todos los derechos reservados
                     </div>
                 </div>
 
@@ -57,7 +61,7 @@ export default function Login({ status, canResetPassword }: { status?: string; c
 
                         {/* Logo móvil */}
                         <div className="lg:hidden text-center mb-8">
-                            <span className="text-3xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>MenuCloud</span>
+                            <span className="text-3xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>KeMenu</span>
                         </div>
 
                         <div className="rounded-2xl p-8" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>

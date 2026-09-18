@@ -14,6 +14,7 @@ import {
     ArrowRightOnRectangleIcon,
     UserCircleIcon,
     CurrencyDollarIcon,
+    CheckCircleIcon,
 } from '@heroicons/react/24/outline';
 
 function FlashMessage() {
@@ -32,16 +33,16 @@ function FlashMessage() {
         <>
             {flash?.success && (
                 <div className="fixed top-4 right-4 z-50 flex items-center gap-3 bg-green-500 text-white px-4 py-3 rounded-xl shadow-lg text-sm font-medium animate-pulse">
-                    <span>✓</span>
+                    <CheckCircleIcon className="w-5 h-5 flex-shrink-0" />
                     <span>{flash.success}</span>
-                    <button onClick={() => setVisible(false)} className="ml-2 opacity-70 hover:opacity-100">✕</button>
+                    <button onClick={() => setVisible(false)} className="ml-2 opacity-70 hover:opacity-100"><XMarkIcon className="w-4 h-4" /></button>
                 </div>
             )}
             {flash?.error && (
                 <div className="fixed top-4 right-4 z-50 flex items-center gap-3 bg-red-500 text-white px-4 py-3 rounded-xl shadow-lg text-sm font-medium">
-                    <span>✕</span>
+                    <XMarkIcon className="w-5 h-5 flex-shrink-0" />
                     <span>{flash.error}</span>
-                    <button onClick={() => setVisible(false)} className="ml-2 opacity-70 hover:opacity-100">✕</button>
+                    <button onClick={() => setVisible(false)} className="ml-2 opacity-70 hover:opacity-100"><XMarkIcon className="w-4 h-4" /></button>
                 </div>
             )}
         </>
@@ -85,7 +86,7 @@ export default function PanelLayout({ children, title, showSyncStatus = false })
                 <div className="p-4 border-b border-gray-700 flex items-center justify-between">
                     {sidebarOpen && (
                         <div>
-                            <h1 className="text-xl font-bold text-yellow-400">MenuCloud</h1>
+                            <h1 className="text-xl font-bold text-yellow-400">KeMenu</h1>
                             <p className="text-xs text-gray-400">
                                 {isSuperAdmin ? 'Super Admin' : 'Panel Restaurante'}
                             </p>

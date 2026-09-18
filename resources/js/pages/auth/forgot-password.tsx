@@ -1,4 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
+import { CheckIcon } from '@heroicons/react/24/outline';
 
 export default function ForgotPassword({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -12,7 +13,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
     return (
         <>
-            <Head title="Recuperar Contraseña — MenuCloud" />
+            <Head title="Recuperar Contraseña — KeMenu" />
 
             <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1a1611 0%, #2c2418 50%, #1a1611 100%)' }}>
                 <div className="w-full max-w-md px-4">
@@ -20,7 +21,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     {/* Logo */}
                     <div className="text-center mb-8">
                         <a href="/">
-                            <span className="text-3xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>MenuCloud</span>
+                            <span className="text-3xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>KeMenu</span>
                         </a>
                         <p className="text-gray-500 text-sm mt-1">Menús Digitales para Restaurantes</p>
                     </div>
@@ -40,8 +41,9 @@ export default function ForgotPassword({ status }: { status?: string }) {
                         </p>
 
                         {status && (
-                            <div className="mb-5 p-4 rounded-xl text-sm text-center" style={{ background: 'rgba(39,174,96,0.15)', border: '1px solid rgba(39,174,96,0.3)', color: '#2ecc71' }}>
-                                ✓ {status}
+                            <div className="mb-5 p-4 rounded-xl text-sm text-center flex items-center justify-center gap-2" style={{ background: 'rgba(39,174,96,0.15)', border: '1px solid rgba(39,174,96,0.3)', color: '#2ecc71' }}>
+                                <CheckIcon className="w-4 h-4 flex-shrink-0" />
+                                {status}
                             </div>
                         )}
 

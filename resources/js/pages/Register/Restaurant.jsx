@@ -1,5 +1,6 @@
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { CheckIcon, GiftIcon } from '@heroicons/react/24/outline';
 
 export default function Restaurant({ plans }) {
     const [step, setStep] = useState(1);
@@ -33,14 +34,14 @@ export default function Restaurant({ plans }) {
 
     return (
         <>
-            <Head title="Registra tu Restaurante — MenuCloud" />
+            <Head title="Registra tu Restaurante — KeMenu" />
 
             <div className="min-h-screen bg-gray-50 flex flex-col">
 
                 {/* Header */}
                 <div className="bg-gray-900 py-4 px-6 flex items-center justify-between">
                     <div>
-                        <span className="text-xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>MenuCloud</span>
+                        <span className="text-xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>KeMenu</span>
                         <span className="text-gray-400 text-sm ml-2">Menús Digitales</span>
                     </div>
                     <a href="/login" className="text-sm text-gray-300 hover:text-white">
@@ -65,7 +66,7 @@ export default function Restaurant({ plans }) {
                                         step === s ? 'bg-yellow-400 text-gray-900' :
                                             'bg-gray-200 text-gray-500'
                                         }`}>
-                                        {step > s ? '✓' : s}
+                                        {step > s ? <CheckIcon className="w-4 h-4" /> : s}
                                     </div>
                                     {s < 3 && <div className={`w-12 h-0.5 ${step > s ? 'bg-green-500' : 'bg-gray-200'}`}></div>}
                                 </div>
@@ -233,15 +234,16 @@ export default function Restaurant({ plans }) {
                                                             </div>
                                                         </div>
                                                         <div className="text-right">
-                                                            <div className="text-2xl font-bold text-yellow-600">${plan.price}</div>
+                                                            <div className="text-2xl font-bold text-yellow-600">RD${plan.price}</div>
                                                             <div className="text-xs text-gray-400">/mes</div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             ))}
                                         </div>
-                                        <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 text-xs text-blue-700">
-                                            🎁 <strong>30 días gratis</strong> — Tu cuenta será activada por nuestro equipo en menos de 24 horas. Te notificaremos por email.
+                                        <div className="flex items-start gap-2 bg-blue-50 border border-blue-100 rounded-xl p-3 text-xs text-blue-700">
+                                            <GiftIcon className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                                            <span><strong>30 días gratis</strong> — Tu cuenta será activada por nuestro equipo en menos de 24 horas. Te notificaremos por email.</span>
                                         </div>
                                         {errors.plan_id && <p className={errorClass}>{errors.plan_id}</p>}
                                         <div className="flex gap-3">
@@ -256,7 +258,7 @@ export default function Restaurant({ plans }) {
                                                 type="submit"
                                                 className="flex-1 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded-xl transition-colors"
                                             >
-                                                Enviar Solicitud ✓
+                                                Enviar Solicitud
                                             </button>
                                         </div>
                                     </div>

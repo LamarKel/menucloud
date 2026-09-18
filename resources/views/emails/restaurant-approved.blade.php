@@ -117,24 +117,24 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">MenuCloud</div>
-            <div class="badge">✓ Restaurante Aprobado</div>
+            <div class="logo">KeMenu</div>
+            <div class="badge">Restaurante Aprobado</div>
         </div>
         <div class="body">
-            <div class="title">¡Tu restaurante fue aprobado! 🎉</div>
-            <p class="text">Hola <strong>{{ $restaurant->owner_name }}</strong>, nos complace informarte que tu restaurante <strong>{{ $restaurant->name }}</strong> ha sido aprobado en MenuCloud. ¡Ya puedes acceder a tu panel y comenzar a configurar tu menú digital!</p>
+            <div class="title">¡Tu restaurante fue aprobado!</div>
+            <p class="text">Hola <strong>{{ $restaurant->owner_name }}</strong>, nos complace informarte que tu restaurante <strong>{{ $restaurant->name }}</strong> ha sido aprobado en KeMenu. ¡Ya puedes acceder a tu panel y comenzar a configurar tu menú digital!</p>
 
             <div class="box">
                 <div class="box-title">Tus datos de acceso</div>
-                <div class="box-item">🌐 <strong>Panel:</strong> <a href="{{ url('/login') }}" style="color: #C9A84C;">{{ url('/login') }}</a></div>
-                <div class="box-item">📧 <strong>Email:</strong> {{ $restaurant->email }}</div>
-                <div class="box-item">🔑 <strong>Contraseña:</strong> La que registraste al crear tu cuenta</div>
+                <div class="box-item"><strong>Panel:</strong> <a href="{{ url('/login') }}" style="color: #C9A84C;">{{ url('/login') }}</a></div>
+                <div class="box-item"><strong>Email:</strong> {{ $restaurant->email }}</div>
+                <div class="box-item"><strong>Contraseña:</strong> La que registraste al crear tu cuenta</div>
             </div>
 
             <a href="{{ url('/login') }}" class="btn">Acceder a mi Panel →</a>
 
             <div class="tip">
-                💡 <strong>Tip:</strong> Lo primero que debes hacer es agregar las categorías de tu menú y luego los productos. Después personaliza los colores desde "Mi Restaurante".
+                <strong>Tip:</strong> Lo primero que debes hacer es agregar las categorías de tu menú y luego los productos. Después personaliza los colores desde "Mi Restaurante".
             </div>
 
             <p class="text">Tu menú digital estará disponible en:</p>
@@ -144,10 +144,10 @@
                 </div>
             </div>
 
-            <p class="text" style="font-size: 13px; color: #888;">¿Necesitas ayuda? Escríbenos a <a href="mailto:soporte@menucloud.com" style="color: #C9A84C;">soporte@menucloud.com</a></p>
+            <p class="text" style="font-size: 13px; color: #888;">¿Necesitas ayuda? Escríbenos a <a href="mailto:soporte@kemenu.com" style="color: #C9A84C;">soporte@kemenu.com</a></p>
         </div>
         <div class="footer">
-            © 2026 MenuCloud · Todos los derechos reservados<br>
+            © 2026 KeMenu · Todos los derechos reservados<br>
             Menús digitales profesionales para restaurantes
         </div>
     </div>

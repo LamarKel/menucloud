@@ -114,7 +114,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">MenuCloud</div>
+            <div class="logo">KeMenu</div>
             <div style="color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 4px;">Menús Digitales para Restaurantes</div>
         </div>
         <div class="body">
@@ -123,12 +123,12 @@
 
             <div class="box">
                 <div class="box-title">Datos de tu solicitud</div>
-                <div class="box-item">🍽️ <strong>Restaurante:</strong> {{ $restaurant->name }}</div>
-                <div class="box-item">🍴 <strong>Tipo de cocina:</strong> {{ $restaurant->cuisine_type }}</div>
+                <div class="box-item"><strong>Restaurante:</strong> {{ $restaurant->name }}</div>
+                <div class="box-item"><strong>Tipo de cocina:</strong> {{ $restaurant->cuisine_type }}</div>
                 @if($restaurant->city)
-                <div class="box-item">📍 <strong>Ciudad:</strong> {{ $restaurant->city }}</div>
+                <div class="box-item"><strong>Ciudad:</strong> {{ $restaurant->city }}</div>
                 @endif
-                <div class="box-item">📧 <strong>Email:</strong> {{ $restaurant->email }}</div>
+                <div class="box-item"><strong>Email:</strong> {{ $restaurant->email }}</div>
             </div>
 
             <p class="text"><strong>¿Qué sigue?</strong></p>
@@ -147,10 +147,10 @@
                 </div>
             </div>
 
-            <p class="text" style="font-size: 13px; color: #888;">¿Tienes preguntas? Escríbenos a <a href="mailto:soporte@menucloud.com" style="color: #C9A84C;">soporte@menucloud.com</a></p>
+            <p class="text" style="font-size: 13px; color: #888;">¿Tienes preguntas? Escríbenos a <a href="mailto:soporte@kemenu.com" style="color: #C9A84C;">soporte@kemenu.com</a></p>
         </div>
         <div class="footer">
-            © 2026 MenuCloud · Todos los derechos reservados<br>
+            © 2026 KeMenu · Todos los derechos reservados<br>
             Menús digitales profesionales para restaurantes
         </div>
     </div>

@@ -19,7 +19,7 @@ export default function ResetPassword({ token, email }: { token: string; email: 
 
     return (
         <>
-            <Head title="Nueva Contraseña — MenuCloud" />
+            <Head title="Nueva Contraseña — KeMenu" />
 
             <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1a1611 0%, #2c2418 50%, #1a1611 100%)' }}>
                 <div className="w-full max-w-md px-4">
@@ -27,7 +27,7 @@ export default function ResetPassword({ token, email }: { token: string; email: 
                     {/* Logo */}
                     <div className="text-center mb-8">
                         <a href="/">
-                            <span className="text-3xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>MenuCloud</span>
+                            <span className="text-3xl font-bold text-yellow-400" style={{ fontFamily: 'Georgia, serif' }}>KeMenu</span>
                         </a>
                         <p className="text-gray-500 text-sm mt-1">Menús Digitales para Restaurantes</p>
                     </div>

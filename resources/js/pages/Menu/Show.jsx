@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
 import { useState, useEffect, useRef } from 'react';
+import { PhotoIcon, StarIcon, FireIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 export default function Show({ restaurant }) {
     const settings = restaurant.settings;
@@ -224,10 +225,10 @@ export default function Show({ restaurant }) {
                                             />
                                         ) : (
                                             <div
-                                                className="w-full flex items-center justify-center text-4xl"
+                                                className="w-full flex items-center justify-center"
                                                 style={{ height: '140px', backgroundColor: `${primaryColor}15` }}
                                             >
-                                                🍽️
+                                                <PhotoIcon className="w-10 h-10" style={{ color: primaryColor }} />
                                             </div>
                                         )}
                                         <div className="p-3">
@@ -253,7 +254,7 @@ export default function Show({ restaurant }) {
                                                     ${Number(product.price).toFixed(2)}
                                                 </span>
                                                 {product.is_featured && (
-                                                    <span className="text-xs">⭐</span>
+                                                    <StarIcon className="w-4 h-4" style={{ color: primaryColor }} />
                                                 )}
                                             </div>
                                         </div>
@@ -270,7 +271,7 @@ export default function Show({ restaurant }) {
                     style={{ borderTop: `1px solid ${textColor}10` }}
                 >
                     <p className="text-xs" style={{ color: `${textColor}40` }}>
-                        Menú digital por <strong style={{ color: primaryColor }}>MenuCloud</strong>
+                        Menú digital por <strong style={{ color: primaryColor }}>KeMenu</strong>
                     </p>
                 </div>
 
@@ -301,10 +302,10 @@ export default function Show({ restaurant }) {
                                     />
                                 ) : (
                                     <div
-                                        className="w-full flex items-center justify-center text-6xl"
+                                        className="w-full flex items-center justify-center"
                                         style={{ height: '180px', backgroundColor: `${primaryColor}15` }}
                                     >
-                                        🍽️
+                                        <PhotoIcon className="w-14 h-14" style={{ color: primaryColor }} />
                                     </div>
                                 )}
                                 <div className="p-6">
@@ -329,10 +330,10 @@ export default function Show({ restaurant }) {
                                     )}
                                     <div className="flex gap-4 text-xs mb-5" style={{ color: `${textColor}50` }}>
                                         {settings?.show_calories && selectedProduct.calories && (
-                                            <span>🔥 {selectedProduct.calories} kcal</span>
+                                            <span className="inline-flex items-center gap-1"><FireIcon className="w-3.5 h-3.5" /> {selectedProduct.calories} kcal</span>
                                         )}
                                         {settings?.show_allergens && selectedProduct.allergens && (
-                                            <span>⚠️ {selectedProduct.allergens}</span>
+                                            <span className="inline-flex items-center gap-1"><ExclamationTriangleIcon className="w-3.5 h-3.5" /> {selectedProduct.allergens}</span>
                                         )}
                                     </div>
                                     <button
