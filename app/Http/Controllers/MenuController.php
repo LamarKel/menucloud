@@ -32,7 +32,15 @@ class MenuController extends Controller
             ->firstOrFail();
 
         return Inertia::render('Menu/Show', [
-            'restaurant' => $restaurant,
+            'restaurant' => [
+                'name' => $restaurant->name,
+                'slug' => $restaurant->slug,
+                'logo' => $restaurant->logo,
+                'banner' => $restaurant->banner,
+                'settings' => $restaurant->settings,
+                'categories' => $restaurant->categories,
+                'promotions' => $restaurant->promotions,
+            ],
         ]);
     }
 }
