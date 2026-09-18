@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Restaurant;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -39,7 +40,7 @@ class ProductController extends Controller
 
         if ($currentCount >= $maxProducts) {
             return redirect()->back()->withErrors([
-                'limit' => "Has alcanzado el límite de {$maxProducts} productos de tu plan."
+                'limit' => "Has alcanzado el límite de {$maxProducts} productos de tu plan.",
             ]);
         }
 
@@ -56,7 +57,7 @@ class ProductController extends Controller
             'sort_order' => 'integer|min:0',
         ]);
         if ($request->hasFile('image')) {
-            $cloudinary = new \Cloudinary\Cloudinary([
+            $cloudinary = new Cloudinary([
                 'cloud' => [
                     'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
                     'api_key' => env('CLOUDINARY_API_KEY'),
@@ -65,7 +66,7 @@ class ProductController extends Controller
             ]);
             $result = $cloudinary->uploadApi()->upload(
                 $request->file('image')->getRealPath(),
-                ['folder' => 'menucloud/products']
+                ['folder' => 'kemenu/products']
             );
             $validated['image'] = $result['secure_url'];
         }
@@ -95,7 +96,7 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $cloudinary = new \Cloudinary\Cloudinary([
+            $cloudinary = new Cloudinary([
                 'cloud' => [
                     'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
                     'api_key' => env('CLOUDINARY_API_KEY'),
@@ -104,7 +105,7 @@ class ProductController extends Controller
             ]);
             $result = $cloudinary->uploadApi()->upload(
                 $request->file('image')->getRealPath(),
-                ['folder' => 'menucloud/products']
+                ['folder' => 'kemenu/products']
             );
             $validated['image'] = $result['secure_url'];
         }

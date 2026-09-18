@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Restaurant;
 
 use App\Http\Controllers\Controller;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -44,7 +45,7 @@ class SettingController extends Controller
             'description' => $request->description,
         ];
 
-        $cloudinary = new \Cloudinary\Cloudinary([
+        $cloudinary = new Cloudinary([
             'cloud' => [
                 'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
                 'api_key' => env('CLOUDINARY_API_KEY'),
@@ -55,7 +56,7 @@ class SettingController extends Controller
         if ($request->hasFile('logo')) {
             $result = $cloudinary->uploadApi()->upload(
                 $request->file('logo')->getRealPath(),
-                ['folder' => 'menucloud/logos']
+                ['folder' => 'kemenu/logos']
             );
             $restaurantData['logo'] = $result['secure_url'];
         }
@@ -63,7 +64,7 @@ class SettingController extends Controller
         if ($request->hasFile('banner')) {
             $result = $cloudinary->uploadApi()->upload(
                 $request->file('banner')->getRealPath(),
-                ['folder' => 'menucloud/banners']
+                ['folder' => 'kemenu/banners']
             );
             $restaurantData['banner'] = $result['secure_url'];
         }

@@ -18,7 +18,7 @@ class RestaurantApproved extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '¡Tu restaurante fue aprobado! — MenuCloud',
+            subject: '¡Tu restaurante fue aprobado! — KeMenu',
         );
     }
 

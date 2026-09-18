@@ -12,7 +12,7 @@ class SuperAdminSeeder extends Seeder
     {
         User::create([
             'name' => 'Super Admin',
-            'email' => 'admin@menucloud.com',
+            'email' => 'admin@kemenu.com',
             'password' => Hash::make('password123'),
             'role' => 'superadmin',
             'restaurant_id' => null,
