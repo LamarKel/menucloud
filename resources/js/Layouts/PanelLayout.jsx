@@ -60,6 +60,7 @@ export default function PanelLayout({ children, title, showSyncStatus = false })
         { href: route('admin.restaurants.index'), label: 'Restaurantes', icon: BuildingStorefrontIcon },
         { href: route('admin.plans.index'), label: 'Planes', icon: StarIcon },
         { href: route('admin.payments.index'), label: 'Pagos', icon: CurrencyDollarIcon },
+        { href: route('profile.edit'), label: 'Perfil', icon: UserCircleIcon },
     ];
 
     const restaurantNav = [
@@ -68,7 +69,7 @@ export default function PanelLayout({ children, title, showSyncStatus = false })
         { href: route('panel.categories.index'), label: 'Categorías', icon: TagIcon },
         { href: route('panel.promotions.index'), label: 'Promociones', icon: MegaphoneIcon },
         { href: route('panel.settings.edit'), label: 'Mi Restaurante', icon: Cog6ToothIcon },
-
+        { href: route('profile.edit'), label: 'Perfil', icon: UserCircleIcon },
     ];
 
     const navItems = isSuperAdmin ? superAdminNav : restaurantNav;
