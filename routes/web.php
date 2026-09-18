@@ -32,7 +32,7 @@ Route::get('/', function () {
 // Menú público (sin autenticación)
 Route::get('/menu/{slug}', [MenuController::class, 'show'])->name('menu.show');
 Route::get('/registro', [RegisterRestaurantController::class, 'create'])->name('register.restaurant');
-Route::post('/registro', [RegisterRestaurantController::class, 'store'])->name('register.restaurant.store');
+Route::post('/registro', [RegisterRestaurantController::class, 'store'])->middleware('throttle:6,1')->name('register.restaurant.store');
 Route::get('/registro/exitoso', [RegisterRestaurantController::class, 'success'])->name('register.restaurant.success');
 
 // Rutas autenticadas

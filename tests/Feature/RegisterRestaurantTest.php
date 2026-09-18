@@ -54,3 +54,25 @@ test('the owner cannot access the panel until the restaurant is approved', funct
     $this->actingAs($user)->get('/panel/dashboard')->assertRedirect('/login');
     $this->assertGuest();
 });
+
+test('registration is rate limited to prevent spam', function () {
+    Mail::fake();
+
+    $plan = Plan::factory()->create();
+
+    $payload = fn (int $i) => [
+        'restaurant_name' => "Spam $i",
+        'cuisine_type' => 'x',
+        'owner_name' => 'Spammer',
+        'email' => "spam-$i@example.com",
+        'password' => 'password',
+        'password_confirmation' => 'password',
+        'plan_id' => $plan->id,
+    ];
+
+    for ($i = 1; $i <= 6; $i++) {
+        $this->post('/registro', $payload($i))->assertRedirect(route('register.restaurant.success'));
+    }
+
+    $this->post('/registro', $payload(7))->assertStatus(429);
+});
