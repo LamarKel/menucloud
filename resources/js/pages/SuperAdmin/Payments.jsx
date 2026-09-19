@@ -14,6 +14,7 @@ export default function Payments({ payments, restaurants, totalRevenue, monthRev
         restaurant_id: '',
         amount: '',
         method: 'transfer',
+        billing_cycle: 'monthly',
         reference: '',
         paid_at: new Date().toISOString().split('T')[0],
         notes: '',
@@ -24,7 +25,7 @@ export default function Payments({ payments, restaurants, totalRevenue, monthRev
         router.post(route('admin.payments.store'), form, {
             onSuccess: () => {
                 setShowModal(false);
-                setForm({ restaurant_id: '', amount: '', method: 'transfer', reference: '', paid_at: new Date().toISOString().split('T')[0], notes: '' });
+                setForm({ restaurant_id: '', amount: '', method: 'transfer', billing_cycle: 'monthly', reference: '', paid_at: new Date().toISOString().split('T')[0], notes: '' });
             },
         });
     };
@@ -154,7 +155,8 @@ export default function Payments({ payments, restaurants, totalRevenue, monthRev
                                         const selectedId = parseInt(e.target.value);
                                         const selected = restaurants.find(r => r.id === selectedId);
                                         const planPrice = selected?.active_subscription?.plan?.price ?? '';
-                                        setForm({ ...form, restaurant_id: e.target.value, amount: planPrice });
+                                        const billingCycle = selected?.active_subscription?.billing_cycle ?? 'monthly';
+                                        setForm({ ...form, restaurant_id: e.target.value, amount: planPrice, billing_cycle: billingCycle });
                                     }}
                                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                     required
@@ -190,6 +192,18 @@ export default function Payments({ payments, restaurants, totalRevenue, monthRev
                                         <option value="cash">Efectivo</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Ciclo de pago *</label>
+                                <select
+                                    value={form.billing_cycle}
+                                    onChange={e => setForm({ ...form, billing_cycle: e.target.value })}
+                                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                >
+                                    <option value="monthly">Mensual</option>
+                                    <option value="yearly">Anual</option>
+                                </select>
+                                <p className="text-xs text-gray-400 mt-1">Si marcas "Anual", este restaurante no se te va a recordar de nuevo hasta dentro de un año.</p>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Referencia / Comprobante</label>

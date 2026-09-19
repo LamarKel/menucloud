@@ -4,11 +4,11 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
-use App\Models\Subscription;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class PaymentController extends Controller
 {
@@ -20,8 +20,7 @@ class PaymentController extends Controller
             'confirmedBy',
         ])->latest()->paginate(20);
 
-        $restaurants = Restaurant::where('status', 'active')
-            ->with(['activeSubscription.plan'])
+        $restaurants = Restaurant::with(['activeSubscription.plan'])
             ->get();
 
         $totalRevenue = Payment::sum('amount');
@@ -43,6 +42,7 @@ class PaymentController extends Controller
             'restaurant_id' => 'required|exists:restaurants,id',
             'amount' => 'required|numeric|min:0',
             'method' => 'required|in:transfer,cash',
+            'billing_cycle' => 'required|in:monthly,yearly',
             'reference' => 'nullable|string|max:255',
             'paid_at' => 'required|date',
             'notes' => 'nullable|string',
@@ -51,7 +51,7 @@ class PaymentController extends Controller
         $restaurant = Restaurant::findOrFail($validated['restaurant_id']);
         $subscription = $restaurant->activeSubscription;
 
-        if (!$subscription) {
+        if (! $subscription) {
             return redirect()->back()->withErrors(['error' => 'Este restaurante no tiene suscripción activa.']);
         }
 
@@ -65,11 +65,23 @@ class PaymentController extends Controller
             'notes' => $validated['notes'] ?? null,
         ]);
 
-        // Actualizar próxima fecha de cobro
+        // La próxima fecha de cobro se extiende desde lo que sea más
+        // tardío entre el corte anterior y la fecha del pago, para que
+        // un pago atrasado no "pierda" tiempo ni uno adelantado lo acorte.
+        $anchor = $subscription->next_billing_date->max(Carbon::parse($validated['paid_at']));
+        $nextBillingDate = $validated['billing_cycle'] === 'yearly'
+            ? $anchor->copy()->addYear()
+            : $anchor->copy()->addMonth();
+
         $subscription->update([
-            'next_billing_date' => now()->addMonth(),
+            'billing_cycle' => $validated['billing_cycle'],
+            'next_billing_date' => $nextBillingDate,
             'status' => 'active',
+            'reminder_sent_at' => null,
         ]);
+
+        // Por si el restaurante había quedado auto-suspendido por falta de pago.
+        $restaurant->update(['status' => 'active']);
 
         return redirect()->back()->with('success', 'Pago registrado exitosamente.');
     }
@@ -77,6 +89,7 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         $payment->delete();
+
         return redirect()->back()->with('success', 'Pago eliminado.');
     }
 }

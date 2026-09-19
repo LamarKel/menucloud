@@ -118,6 +118,7 @@ export default function Restaurants({ restaurants, plans }) {
                             <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Contacto</th>
                             <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Plan</th>
                             <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                            <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Próximo pago</th>
                             <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Ingresos</th>
                             <th className="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                         </tr>
@@ -138,6 +139,21 @@ export default function Restaurants({ restaurants, plans }) {
                                 </td>
                                 <td className="px-6 py-4">
                                     {statusBadge(r.status)}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {r.subscription ? (
+                                        <>
+                                            <p className="text-sm text-gray-700">{r.subscription.next_billing_date}</p>
+                                            <p className="text-xs text-gray-400">
+                                                {r.subscription.billing_cycle === 'yearly' ? 'Anual' : 'Mensual'}
+                                                {r.subscription.status === 'overdue' && (
+                                                    <span className="ml-1 text-red-600 font-medium">· Vencido</span>
+                                                )}
+                                            </p>
+                                        </>
+                                    ) : (
+                                        <span className="text-sm text-gray-400">—</span>
+                                    )}
                                 </td>
                                 <td className="px-6 py-4">
                                     <span className="text-sm font-medium text-gray-800">
@@ -186,7 +202,7 @@ export default function Restaurants({ restaurants, plans }) {
                         ))}
                         {filtered.length === 0 && (
                             <tr>
-                                <td colSpan={6} className="px-6 py-12 text-center text-gray-400 text-sm">
+                                <td colSpan={7} className="px-6 py-12 text-center text-gray-400 text-sm">
                                     No se encontraron restaurantes
                                 </td>
                             </tr>

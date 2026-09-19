@@ -24,6 +24,8 @@ class RestaurantController extends Controller
             ->latest()
             ->get()
             ->map(function ($restaurant) {
+                $subscription = $restaurant->subscriptions->sortByDesc('id')->first();
+
                 return [
                     'id' => $restaurant->id,
                     'name' => $restaurant->name,
@@ -37,6 +39,11 @@ class RestaurantController extends Controller
                     'logo' => $restaurant->logo,
                     'status' => $restaurant->status,
                     'plan' => $restaurant->plan,
+                    'subscription' => $subscription ? [
+                        'status' => $subscription->status,
+                        'billing_cycle' => $subscription->billing_cycle,
+                        'next_billing_date' => $subscription->next_billing_date->format('d/m/Y'),
+                    ] : null,
                     'total_revenue' => $restaurant->subscriptions
                         ->flatMap->payments
                         ->sum('amount'),

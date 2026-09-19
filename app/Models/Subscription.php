@@ -10,14 +10,17 @@ class Subscription extends Model
         'restaurant_id',
         'plan_id',
         'status',
+        'billing_cycle',
         'started_at',
         'next_billing_date',
+        'reminder_sent_at',
         'notes',
     ];
 
     protected $casts = [
         'started_at' => 'date',
         'next_billing_date' => 'date',
+        'reminder_sent_at' => 'date',
     ];
 
     public function restaurant()
