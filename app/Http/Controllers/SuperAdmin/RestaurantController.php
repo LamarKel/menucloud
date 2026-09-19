@@ -142,6 +142,13 @@ class RestaurantController extends Controller
         return redirect()->back()->with('success', 'Restaurante suspendido.');
     }
 
+    public function reactivate(Restaurant $restaurant)
+    {
+        $restaurant->update(['status' => 'active']);
+
+        return redirect()->back()->with('success', 'Restaurante reactivado.');
+    }
+
     public function destroy(Restaurant $restaurant)
     {
         $restaurant->delete();

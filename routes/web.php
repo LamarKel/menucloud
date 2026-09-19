@@ -45,6 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/restaurants', [SuperAdminRestaurant::class, 'store'])->name('restaurants.store');
         Route::patch('/restaurants/{restaurant}/approve', [SuperAdminRestaurant::class, 'approve'])->name('restaurants.approve');
         Route::patch('/restaurants/{restaurant}/suspend', [SuperAdminRestaurant::class, 'suspend'])->name('restaurants.suspend');
+        Route::patch('/restaurants/{restaurant}/reactivate', [SuperAdminRestaurant::class, 'reactivate'])->name('restaurants.reactivate');
         Route::delete('/restaurants/{restaurant}', [SuperAdminRestaurant::class, 'destroy'])->name('restaurants.destroy');
         Route::get('/plans', [SuperAdminPlan::class, 'index'])->name('plans.index');
         Route::post('/plans', [SuperAdminPlan::class, 'store'])->name('plans.store');

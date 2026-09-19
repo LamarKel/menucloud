@@ -30,3 +30,20 @@ test('superadmin creating a restaurant also creates its owner user and sends a p
 
     Notification::assertSentTo($user, ResetPassword::class);
 });
+
+test('superadmin can suspend and then reactivate a restaurant', function () {
+    $admin = User::factory()->create(['role' => 'superadmin']);
+    $restaurant = Restaurant::factory()->create(['status' => 'active']);
+
+    $this->actingAs($admin)
+        ->patch("/admin/restaurants/{$restaurant->id}/suspend")
+        ->assertRedirect();
+
+    expect($restaurant->fresh()->status)->toBe('suspended');
+
+    $this->actingAs($admin)
+        ->patch("/admin/restaurants/{$restaurant->id}/reactivate")
+        ->assertRedirect();
+
+    expect($restaurant->fresh()->status)->toBe('active');
+});

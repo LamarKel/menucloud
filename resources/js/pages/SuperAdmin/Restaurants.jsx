@@ -7,6 +7,7 @@ import {
     XCircleIcon,
     TrashIcon,
     MagnifyingGlassIcon,
+    ArrowPathIcon,
 } from '@heroicons/react/24/outline';
 
 export default function Restaurants({ restaurants, plans }) {
@@ -53,6 +54,10 @@ export default function Restaurants({ restaurants, plans }) {
         if (confirm('¿Seguro que deseas suspender este restaurante?')) {
             router.patch(route('admin.restaurants.suspend', id));
         }
+    };
+
+    const handleReactivate = (id) => {
+        router.patch(route('admin.restaurants.reactivate', id));
     };
 
     const handleDelete = (id) => {
@@ -157,6 +162,15 @@ export default function Restaurants({ restaurants, plans }) {
                                                 title="Suspender"
                                             >
                                                 <XCircleIcon className="w-5 h-5" />
+                                            </button>
+                                        )}
+                                        {r.status === 'suspended' && (
+                                            <button
+                                                onClick={() => handleReactivate(r.id)}
+                                                className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                                                title="Reactivar"
+                                            >
+                                                <ArrowPathIcon className="w-5 h-5" />
                                             </button>
                                         )}
                                         <button
