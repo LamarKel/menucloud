@@ -147,7 +147,7 @@
                 </div>
             </div>
 
-            <p class="text" style="font-size: 13px; color: #888;">¿Tienes preguntas? Escríbenos a <a href="mailto:soporte@kemenu.com" style="color: #C9A84C;">soporte@kemenu.com</a></p>
+            <p class="text" style="font-size: 13px; color: #888;">¿Tienes preguntas? Escríbenos a <a href="mailto:soporte@kemenu.app" style="color: #C9A84C;">soporte@kemenu.app</a></p>
         </div>
         <div class="footer">
             © 2026 KeMenu · Todos los derechos reservados<br>

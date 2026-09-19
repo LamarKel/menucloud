@@ -50,7 +50,7 @@ export default function Success() {
                         </Link>
 
                         <p className="text-xs text-gray-400 mt-4">
-                            ¿Tienes preguntas? Escríbenos a <strong>soporte@kemenu.com</strong>
+                            ¿Tienes preguntas? Escríbenos a <strong>soporte@kemenu.app</strong>
                         </p>
                     </div>
                 </div>
